@@ -1,0 +1,7 @@
+Pasos para el riego
+
+1. Calcular el Volumen de Riego - calcular_volumen_de_riego.py
+2. Dada la velocidad de riego, calcular el tiempo de riego - calcular_tiempo_de_riego.py
+3. Chequiar la hora para determinar si debemos ejecutar el programa - arduino_communication.py
+    8A.M. - Humedad < 60%, se riega 3/4 del Volumen De Riego
+    2P.M. - Humdedad < 60%, se riega 1/4 del Volumen De Riego
