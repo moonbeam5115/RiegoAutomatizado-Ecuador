@@ -1,4 +1,4 @@
-# RiegoAutomatizado 
+# Riego Automatizado 
 
 # Create and activate an environment:
 conda create --prefix ./env python=3.8 -y
