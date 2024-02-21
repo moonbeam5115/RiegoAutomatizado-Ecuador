@@ -5,7 +5,7 @@ import time
 
 state_left = win32api.GetKeyState(0x01)  # Left button up = 0 or 1. Button down = -127 or -128
 
-board = pyfirmata.Arduino('COM5')
+board = pyfirmata.Arduino('COM3')
 
 #iterator thread
 it = util.Iterator(board)
@@ -28,6 +28,7 @@ print("Comenzando Experimento Para Determinar Caudal...")
 while True:
     humedad_sensor_tierra = analog_0_input.read()
     
+    print("output 5: ", digital_5_output)
     a = win32api.GetKeyState(0x01)
     if a != state_left:  # Button state changed
         state_left = a
