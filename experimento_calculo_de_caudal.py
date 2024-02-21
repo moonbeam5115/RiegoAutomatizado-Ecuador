@@ -22,6 +22,8 @@ cambio_en_tiempo = 0
 caudal = 0
 volumen_experimental = 1
 
+digital_5_output.write(0)
+
 print("Comenzando Experimento Para Determinar Caudal...")
 while True:
     humedad_sensor_tierra = analog_0_input.read()
