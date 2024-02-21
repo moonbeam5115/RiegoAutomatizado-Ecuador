@@ -111,3 +111,5 @@ Vriego= Lb*area
 Ef= (Etc*Fr/Lb)
 Ea= (Ln/Lb)*100
 
+# El resultdo sera la Evapotranspiracion para determinar el Volumen (cantidad) 
+# de agua requerida para el riego

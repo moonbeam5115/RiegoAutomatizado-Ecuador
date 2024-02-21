@@ -1,5 +1,6 @@
-certifi @ file:///C:/b/abs_85o_6fm0se/croot/certifi_1671487778835/work/certifi
 pyFirmata==1.1.0
 pyserial==3.5
+pywin32==306
 schedule==1.2.1
+six==1.16.0
 wincertstore==0.2
