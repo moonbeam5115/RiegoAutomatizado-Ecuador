@@ -29,7 +29,7 @@ i = 0
 while True:
     humedad_sensor_tierra = analog_0_input.read()
     
-    print("output 5: ", digital_5_output)
+    
     a = win32api.GetKeyState(0x02)
     if a != state_right:  # Button state changed
         state_right = a
