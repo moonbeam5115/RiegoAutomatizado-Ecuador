@@ -41,19 +41,20 @@ def determinar_riego(t):
           global CONTINUAR
           humedad_sensor_tierra = analog_0.read()
           humedad_sensor_aire = analog_1.read()
-          print(humedad_sensor_tierra)
+          
 
-          if humedad_sensor_tierra is not None and humedad_sensor_tierra < 0.4:
+          if humedad_sensor_tierra is not None and humedad_sensor_tierra < 0.9:
                print(f"Humedad baja detectada... Comenzando Sesion de Riego por {t} segundos")
                
                # Ejecutar el program por el tiempo determinado, t
                while cambio_en_tiempo <= t:
-                    print(cambio_en_tiempo)
+                    print(cambio_en_tiempo, t)
                     end = time.time()
                     cambio_en_tiempo = round(end-ahora)
                     digital_5_output.write(0)
                
                CONTINUAR = False
+               digital_5_output.write(1)
                break
           if humedad_sensor_tierra is not None and humedad_sensor_tierra >= 1.0:
                print(humedad_sensor_tierra)
@@ -66,7 +67,7 @@ def determinar_riego(t):
                
 
 # Begin Scheduling Logic
-schedule.every().day.at("23:07").do(determinar_riego, tiempo)
+schedule.every().day.at("23:35").do(determinar_riego, tiempo)
 
 
 # Run Program continuously
