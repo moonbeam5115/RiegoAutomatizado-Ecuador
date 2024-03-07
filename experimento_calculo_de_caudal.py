@@ -22,7 +22,7 @@ cambio_en_tiempo = 0
 caudal = 0
 volumen_experimental = 1
 
-digital_5_output.write(0)
+digital_5_output.write(1)
 
 print("Comenzando Experimento Para Determinar Caudal...")
 i = 0
@@ -36,12 +36,11 @@ while True:
             i += 1
             comienzo = time.time()
             
-        digital_5_output.write(1)
+        digital_5_output.write(0)
     else:
         final = time.time()
-        digital_5_output.write(0)
+        digital_5_output.write(1)
         cambio_en_tiempo = final - comienzo
         caudal = volumen_experimental/cambio_en_tiempo
         print(f"El Caudal es: {caudal} L/s")
         exit(0)
-        
