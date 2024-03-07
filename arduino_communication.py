@@ -20,7 +20,7 @@ def determinar_riego(t):
      e.g. a:0:i for analog 0 as input, or
           d:3:p for digital pin 3 as pwm.
      ''' 
-     board = pyfirmata.Arduino('COM5')
+     board = pyfirmata.Arduino('COM3')
 
      #iterator thread
      it = util.Iterator(board)
@@ -32,6 +32,8 @@ def determinar_riego(t):
      analog_1 = board.get_pin('a:2:i')
      analog_1.enable_reporting()
 
+     digital_5_output = board.get_pin('d:5:o')
+     digital_5_output.write(1)
      while True:
           global CONTINUAR
           humedad_sensor_tierra = analog_0.read()
@@ -48,20 +50,22 @@ def determinar_riego(t):
                     print(f"regando agua...")
                     end = time.time()
                     cambio_en_tiempo = round(end-ahora)
-
+                    digital_5_output.write(0)
                
                CONTINUAR = False
                break
           if humedad_sensor_tierra is not None and humedad_sensor_tierra >= 0.5:
                print(humedad_sensor_tierra)
                print("No necesita agua... Finalizando Sesion de Riego.")
+               digital_5_output.write(1)
                time.sleep(1)
+
                CONTINUAR = False
                break
                
 
 # Begin Scheduling Logic
-schedule.every().day.at("22:25").do(determinar_riego, tiempo)
+schedule.every().day.at("22:31").do(determinar_riego, tiempo)
 
 
 # Run Program continuously
