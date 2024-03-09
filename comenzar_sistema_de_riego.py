@@ -1,14 +1,26 @@
 import pyfirmata
 import time
 from pyfirmata import util
-import calcular_volumen_de_riego
-import calcular_tiempo_de_riego
+from calcular_datos_met import promedios_datos_met
+from calcular_volumen_de_riego import calcular
+from calcular_tiempo_de_riego import calcular_tiempo
 import schedule
 import datetime
 
-volumen_de_agua = calcular_volumen_de_riego.calcular()
+data_path = "data/DatosMeteorologicos_Diarios.csv"
+tmax, tmin, hr, hr_min, hr_max = promedios_datos_met(data_path)
 
-tiempo = calcular_tiempo_de_riego.calcular_tiempo(volumen=volumen_de_agua)
+volumen_de_riego = calcular(tmax=tmax,
+                            tmin=tmin,
+                            hr_min=hr_min,
+                            hr_max=hr_max)
+
+
+Caudal = 0.03703    # en L/s    mililitro por segundo - Determinado a base de experimentos
+
+tiempo = calcular_tiempo(volumen=volumen_de_riego,
+                         Caudal=Caudal)
+
 CONTINUAR = True
 
 def determinar_riego(t):
@@ -68,7 +80,6 @@ def determinar_riego(t):
 
 # Begin Scheduling Logic
 schedule.every().day.at("23:35").do(determinar_riego, tiempo)
-
 
 # Run Program continuously
 while CONTINUAR:

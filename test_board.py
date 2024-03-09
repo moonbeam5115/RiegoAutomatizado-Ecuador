@@ -16,3 +16,4 @@ analog_1.enable_reporting()
 while True:
     humedad_sensor_tierra = analog_0.read()
     print(humedad_sensor_tierra)
+    

@@ -1,7 +1,7 @@
-Caudal = 0.03703    # en L/s    mililitro por segundo - Determinado a base de experimentos
+from calcular_datos_met import promedios_datos_met
+from calcular_volumen_de_riego import calcular
 
-
-def calcular_tiempo(volumen):
+def calcular_tiempo(volumen, Caudal):
     
     Tiempo_de_riego = volumen/Caudal
 
