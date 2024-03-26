@@ -17,7 +17,7 @@ es= (e0Tmax+e0Tmin)/2
 ea= (e0Tmin*(hr_max/100)+ e0Tmax*(hr_min/100))/2
 G=0
 krs = 0.17 # Coeficiente de Ajuste
-Ra = 37  # Radiacion Extraterrestre MJ M^-2 Dia^-1 # TODO: Preguntar el valor correcto
+Ra = 36.8  # Radiacion Extraterrestre MJ M^-2 Dia^-1 
 
 Rs = krs*(math.sqrt(tmax-tmin))*Ra
 
@@ -33,30 +33,30 @@ alfa = 0.23 # Albedo de la superficie - cultivo de referencia
 Rns= (1-alfa)*Rs
 Rn= Rns- Rnl
 u2 = 1 # TODO: Preguntar el valor correcto
-Etd= (((0.408*Tri*(Rn-G)))+ (y*(900/(T_total+273))*(u2*(es- ea))))/(Tri+y*(1+(0.34*u2)))
+Etd= (((0.408*Tri*(Rn-G)))+ (y*(900/(T_total+273))*(u2*(es- ea))))/(Tri+y*(1+(0.34*u2)))*24 # De mm/hora a mm/dia
 
 #Ecuaciones
-Kc = 0.90
+Kc = 0.95
 Etc= Kc*Etd
-CC = 1 # TODO: Encontrar valores
-Pmp = 1 # TODO: Encontrar valores
-da = 1 # TODO: Encontrar valores
+CC = 172 # Capacidad De Campo
+Pmp = 143.71 # Punto de Marchitez Permanente
+da = 1.3 # Densidad aparente
 z2 = 0.50 # Profundidad de zona reticular 
-Au= (CC- Pmp)*da*z2
-umbral = 0.35 # Sensibilidad del cultivo a la reduccion del agua en el suelo
-Lr= umbral* Au
+Au = (CC- Pmp)*da*z2 # Agual Util
+umbral = 0.3 # Sensibilidad del cultivo a la reduccion del agua en el suelo
+Lr = umbral*Au 
 Pe = 0 # Aporte efectivo por lluvia
 Ge = 0 # Aporte por agua subterranea
-Ln = Lr - Pe - Ge # Lamina Neta de riego mm TODO: Pasar a cm
+Ln = Lr - Pe - Ge # Lamina Neta de riego mm 
 Ib =  1.50 # velocidad de infiltracion basica - cm/hora
-Tr = Ln/Ib
-Fr= Ln/Etc
+Tr = (10*Ln)/Ib # (multiplicado por 10 para convertir mm a cm)
+Fr = Ln/Etc
 Efr = 0.3 # Eficiencia de riego por inundacion
 Lb = (Etc*Fr)/Efr
-area =  1.2 # m^2
+area =  1200000 # m^2
 Vriego = Lb*area 
-Ef= (Etc*Fr/Lb)
-Ea= (Ln/Lb)*100
+Ef = (Etc*Fr/Lb) 
+Ea = (Ln/Lb)*100
 
 
 '''
