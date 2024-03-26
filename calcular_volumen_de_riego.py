@@ -6,8 +6,8 @@ def calcular(tmax, tmin, hr_min, hr_max):
     T_total = (tmax+tmin)/2
     z = 2496.1 # altura a nivel del mar
     Tri= 4098*(0.6108*math.exp((17.27*T_total)/(T_total+237.3)))/(T_total+237.3)
-    P = 101.3*((293-(0.0065*z)/293)^5.26)
-    y = (0.665*10^3)*P # Constante Psicrosometrica
+    P = 101.3*((293-(0.0065*z)/293)**5.26)
+    y = (0.665*10**3)*P # Constante Psicrosometrica
     e0T= 0.6108*(math.exp((17.27*T_total)/(T_total+237.3)))
     e0Tmax= 0.6108*(math.exp((17.27*tmax)/(tmax+237.3)))
     e0Tmin= 0.6108*(math.exp((17.27*tmin)/(tmin+237.3)))
@@ -55,5 +55,7 @@ def calcular(tmax, tmin, hr_min, hr_max):
     volumen_de_riego = Lb*area 
     Ef = (Etc*Fr/Lb) 
     Ea = (Ln/Lb)*100
+    print("Frecuencia: ", Fr)
+    print("volumen de riego (mL) ", volumen_de_riego)
 
     return volumen_de_riego

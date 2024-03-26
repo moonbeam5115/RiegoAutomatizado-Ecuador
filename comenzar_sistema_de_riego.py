@@ -16,10 +16,11 @@ volumen_de_riego = calcular(tmax=tmax,
                             hr_max=hr_max)
 
 
-Caudal = 0.03703    # en L/s    mililitro por segundo - Determinado a base de experimentos
+Caudal = 0.03703    # en L/s  -  Determinado a base de experimentos
+Caudal_mL = 37.03    # en mililitro por segundo - Determinado a base de experimentos
 
 tiempo = calcular_tiempo(volumen=volumen_de_riego,
-                         Caudal=Caudal)
+                         Caudal=Caudal_mL)
 
 CONTINUAR = True
 
