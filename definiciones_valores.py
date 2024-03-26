@@ -5,7 +5,7 @@ data_path = "data/DatosMeteorologicos_Diarios.csv"
 tmax, tmin, hr, hr_min, hr_max = promedios_datos_met(data_path)
 
 
-T_total= (tmax+tmin)/2
+T_total = (tmax+tmin)/2
 z = 2496.1 # altura a nivel del mar
 Tri= 4098*(0.6108*math.exp((17.27*T_total)/(T_total+237.3)))/(T_total+237.3)
 P = 101.3*((293-(0.0065*z)/293)^5.26)
@@ -53,7 +53,7 @@ Tr = (10*Ln)/Ib # (multiplicado por 10 para convertir mm a cm)
 Fr = Ln/Etc
 Efr = 0.3 # Eficiencia de riego por inundacion
 Lb = (Etc*Fr)/Efr
-area =  1200000 # m^2
+area =  1200000 # mm^2
 Vriego = Lb*area 
 Ef = (Etc*Fr/Lb) 
 Ea = (Ln/Lb)*100
