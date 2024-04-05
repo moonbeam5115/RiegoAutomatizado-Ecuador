@@ -1,0 +1,5 @@
+#1 Probar sensores humedad 
+
+#2 Bomba de agua que corra a diario -
+
+#3 Base de datos - Humedad, volumen, tiempo, temperatura, hora, ...

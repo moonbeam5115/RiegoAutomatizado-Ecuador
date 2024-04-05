@@ -8,20 +8,24 @@ import schedule
 import datetime
 
 data_path = "data/DatosMeteorologicos_Diarios.csv"
-tmax, tmin, hr, hr_min, hr_max = promedios_datos_met(data_path)
+tmax, tmin, hr, hr_min, hr_max = promedios_datos_met(path_de_datos=data_path)
 
 volumen_de_riego = calcular(tmax=tmax,
                             tmin=tmin,
                             hr_min=hr_min,
-                            hr_max=hr_max)
-
+                            hr_max=hr_max) # Returns Volume in L (Liters)
 
 Caudal = 0.03703    # en L/s  -  Determinado a base de experimentos
 Caudal_mL = 37.03    # en mililitro por segundo - Determinado a base de experimentos
 
 tiempo = calcular_tiempo(volumen=volumen_de_riego,
-                         Caudal=Caudal_mL)
+                         Caudal=Caudal)
 
+print("Tiempo de riego por Arduino (segundos): ", tiempo)
+print("Tiempo de riego por Arduino (minutos): ", tiempo/60)
+
+
+exit(0)
 CONTINUAR = True
 
 def determinar_riego(t):
