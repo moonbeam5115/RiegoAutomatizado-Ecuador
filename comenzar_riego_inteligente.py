@@ -5,7 +5,12 @@ from calcular_datos_met import promedios_datos_met
 from calcular_volumen_de_riego import calcular
 from calcular_tiempo_de_riego import calcular_tiempo
 import schedule
-import datetime
+from datetime import datetime
+from datetime import date
+from grabar_a_base_de_datos import actualizar_base_de_datos
+
+CAMPO_RIEGO = 0
+HUMEDAD = 0
 
 data_path = "data/DatosMeteorologicos_Diarios.csv"
 tmax, tmin, hr, hr_min, hr_max = promedios_datos_met(path_de_datos=data_path)
@@ -15,17 +20,16 @@ volumen_de_riego = calcular(tmax=tmax,
                             hr_min=hr_min,
                             hr_max=hr_max) # Returns Volume in L (Liters)
 
+volumen_optimizado = 0.8*volumen_de_riego
 Caudal = 0.03703    # en L/s  -  Determinado a base de experimentos
 Caudal_mL = 37.03    # en mililitro por segundo - Determinado a base de experimentos
 
-tiempo = calcular_tiempo(volumen=volumen_de_riego,
+tiempo = calcular_tiempo(volumen=volumen_optimizado,
                          Caudal=Caudal)
 
 print("Tiempo de riego por Arduino (segundos): ", tiempo)
 print("Tiempo de riego por Arduino (minutos): ", tiempo/60)
 
-
-exit(0)
 CONTINUAR = True
 
 def determinar_riego(t):
@@ -57,12 +61,12 @@ def determinar_riego(t):
      while True:
           global CONTINUAR
           humedad_sensor_tierra = analog_0.read()
-          humedad_sensor_aire = analog_1.read()
-          
 
           if humedad_sensor_tierra is not None and humedad_sensor_tierra < 0.9:
                print(f"Humedad baja detectada... Comenzando Sesion de Riego por {t} segundos")
-               
+
+               CAMPO_RIEGO = 1
+               HUMEDAD = humedad_sensor_tierra
                # Ejecutar el program por el tiempo determinado, t
                while cambio_en_tiempo <= t:
                     print(cambio_en_tiempo, t)
@@ -79,6 +83,8 @@ def determinar_riego(t):
                digital_5_output.write(1)
                time.sleep(1)
 
+               HUMEDAD = humedad_sensor_tierra               
+               CAMPO_RIEGO = 0
                CONTINUAR = False
                break
                
@@ -88,6 +94,16 @@ schedule.every().day.at("23:35").do(determinar_riego, tiempo)
 
 # Run Program continuously
 while CONTINUAR:
-     print(f"Analizando Condiciones de Riego...{datetime.datetime.now()}")
+     print(f"Analizando Condiciones de Riego...{datetime.now()}")
      schedule.run_pending()
      time.sleep(5)
+
+fecha_de_hoy = date.today()
+fecha_string = fecha_de_hoy.strftime('%d/%m/%Y')
+time_now = datetime.now()
+current_time = time_now.strftime("%H:%M:%S")
+SISTEMA_UTILIZADO = "Inteligente"
+
+new_data = [fecha_string, current_time, CAMPO_RIEGO, volumen_de_riego, HUMEDAD, SISTEMA_UTILIZADO]
+filename = 'database/' + 'datos_riego_inteligente.csv'
+actualizar_base_de_datos(filename, new_data)

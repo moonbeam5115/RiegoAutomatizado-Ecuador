@@ -5,7 +5,11 @@ from calcular_datos_met import promedios_datos_met
 from calcular_volumen_de_riego import calcular
 from calcular_tiempo_de_riego import calcular_tiempo
 import schedule
-import datetime
+from datetime import datetime
+from datetime import date
+from grabar_a_base_de_datos import actualizar_base_de_datos
+
+CONTINUAR = True
 
 data_path = "data/DatosMeteorologicos_Diarios.csv"
 tmax, tmin, hr, hr_min, hr_max = promedios_datos_met(path_de_datos=data_path)
@@ -41,6 +45,7 @@ def determinar_riego(t):
      it.start()
 
      digital_6_output = board.get_pin('d:6:o')
+     # 1 is off, 0 is on (Arduino is messed up)
      digital_6_output.write(1)
      cambio_en_tiempo = 0
      ahora = time.time()
@@ -62,10 +67,21 @@ def determinar_riego(t):
 
 
 # Begin Scheduling Logic
-schedule.every().day.at("14:00").do(determinar_riego, tiempo)
+schedule.every().day.at("23:39").do(determinar_riego, tiempo)
 
 # Run Program continuously
 while CONTINUAR:
-     print(f"Comenzando Riego Diario...{datetime.datetime.now()}")
+     print(f"Comenzando Riego Diario...{datetime.now()}")
      schedule.run_pending()
      time.sleep(5)
+
+fecha_de_hoy = date.today()
+fecha_string = fecha_de_hoy.strftime('%d/%m/%Y')
+time_now = datetime.now()
+current_time = time_now.strftime("%H:%M:%S")
+CAMPO_RIEGO = 1
+SISTEMA_UTILIZADO = "Manual"
+
+new_data = [fecha_string, current_time, CAMPO_RIEGO, volumen_de_riego, "N/A", SISTEMA_UTILIZADO]
+filename = 'database/' + 'datos_riego_manual.csv'
+actualizar_base_de_datos(filename, new_data)
