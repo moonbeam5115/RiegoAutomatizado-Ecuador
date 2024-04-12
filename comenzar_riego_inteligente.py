@@ -9,8 +9,6 @@ from datetime import datetime
 from datetime import date
 from grabar_a_base_de_datos import actualizar_base_de_datos
 
-CAMPO_RIEGO = 0
-HUMEDAD = 0
 
 data_path = "data/DatosMeteorologicos_Diarios.csv"
 tmax, tmin, hr, hr_min, hr_max = promedios_datos_met(path_de_datos=data_path)
@@ -31,6 +29,9 @@ print("Tiempo de riego por Arduino (segundos): ", tiempo)
 print("Tiempo de riego por Arduino (minutos): ", tiempo/60)
 
 CONTINUAR = True
+CAMPO_RIEGO = 0
+HUMEDAD = 0
+
 
 def determinar_riego(t):
      '''
@@ -60,6 +61,8 @@ def determinar_riego(t):
 
      while True:
           global CONTINUAR
+          global HUMEDAD
+          global CAMPO_RIEGO
           humedad_sensor_tierra = analog_0.read()
 
           if humedad_sensor_tierra is not None and humedad_sensor_tierra < 0.9:
