@@ -63,6 +63,8 @@ def determinar_riego(t):
           global CONTINUAR
           global HUMEDAD
           global CAMPO_RIEGO
+          global volumen_optimizado
+
           humedad_sensor_tierra = analog_0.read()
 
           if humedad_sensor_tierra is not None and humedad_sensor_tierra < 0.9:
@@ -89,6 +91,7 @@ def determinar_riego(t):
                HUMEDAD = humedad_sensor_tierra               
                CAMPO_RIEGO = 0
                CONTINUAR = False
+               volumen_optimizado = 0
                break
                
 
@@ -107,6 +110,6 @@ time_now = datetime.now()
 current_time = time_now.strftime("%H:%M:%S")
 SISTEMA_UTILIZADO = "Inteligente"
 
-new_data = [fecha_string, current_time, CAMPO_RIEGO, volumen_de_riego, HUMEDAD, SISTEMA_UTILIZADO]
+new_data = [fecha_string, current_time, CAMPO_RIEGO, volumen_optimizado, HUMEDAD, SISTEMA_UTILIZADO]
 filename = 'database/' + 'datos_riego_inteligente.csv'
 actualizar_base_de_datos(filename, new_data)
