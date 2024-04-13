@@ -31,7 +31,7 @@ print("Tiempo de riego por Arduino (minutos): ", tiempo/60)
 CONTINUAR = True
 CAMPO_RIEGO = 0
 HUMEDAD = 0
-
+HUMEDAD_RIEGO= 0.48
 
 def determinar_riego(t):
      '''
@@ -67,7 +67,7 @@ def determinar_riego(t):
 
           humedad_sensor_tierra = analog_0.read()
 
-          if humedad_sensor_tierra is not None and humedad_sensor_tierra < 0.9:
+          if humedad_sensor_tierra is not None and humedad_sensor_tierra >= HUMEDAD_RIEGO:
                print(f"Humedad baja detectada... Comenzando Sesion de Riego por {t} segundos")
 
                CAMPO_RIEGO = 1
@@ -82,7 +82,7 @@ def determinar_riego(t):
                CONTINUAR = False
                digital_5_output.write(1)
                break
-          if humedad_sensor_tierra is not None and humedad_sensor_tierra >= 1.0:
+          if humedad_sensor_tierra is not None and humedad_sensor_tierra < HUMEDAD_RIEGO:
                print(humedad_sensor_tierra)
                print("No necesita agua... Finalizando Sesion de Riego.")
                digital_5_output.write(1)
@@ -96,7 +96,7 @@ def determinar_riego(t):
                
 
 # Begin Scheduling Logic
-schedule.every().day.at("23:35").do(determinar_riego, tiempo)
+schedule.every().day.at("7:00").do(determinar_riego, tiempo)
 
 # Run Program continuously
 while CONTINUAR:

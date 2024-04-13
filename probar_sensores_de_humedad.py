@@ -2,7 +2,7 @@ import pyfirmata
 from pyfirmata import util
 import time
 
-board = pyfirmata.Arduino('COM4')
+board = pyfirmata.Arduino('COM3')
 
 #iterator thread
 it = util.Iterator(board)
