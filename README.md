@@ -15,10 +15,11 @@ El programa contiene los siguientes pasos:
 (9.) Se crea un `while` loop y dentro, continuamente (cada 5 segundos) chequear la hora y determinar si se deberia ejecutar la funcion con -> `schedule.run_pending()`  
 (10.) Se genera el resto de los datos para anadir a la base de datos junto a los datos coleccionados anteriormente  
 
-# Crear y activar un Environment (Anaconda):
+# Antes de Comenzar:
+## Crear y activar un Environment (Anaconda):
 conda create --prefix ./env python=3.8 -y
 
 conda activate ./env
 
-# Instalar requirements
+## Instalar requirements
 pip install -r requirements.txt
