@@ -1,13 +1,3 @@
-# Riego Automatizado 
-
-# Create and activate an environment:
-conda create --prefix ./env python=3.8 -y
-
-conda activate ./env
-
-# Install requirements
-pip install -r requirements.txt
-
 # Sistema Inteligente Para Riego De Agua
 
 El sistema puede ser inicializado por el programa `comenzar_riego_inteligente.py`
@@ -24,3 +14,11 @@ El programa contiene los siguientes pasos:
 (8.) Se define un "scheduler" para poner una hora que debe ejecutarse una funcion (con algun input) -> `schedule.every().day.at("23:35").do(determinar_riego, tiempo)`  
 (9.) Se crea un `while` loop y dentro, continuamente (cada 5 segundos) chequear la hora y determinar si se deberia ejecutar la funcion con -> `schedule.run_pending()`  
 (10.) Se genera el resto de los datos para anadir a la base de datos junto a los datos coleccionados anteriormente  
+
+# Crear y activar un Environment (Anaconda):
+conda create --prefix ./env python=3.8 -y
+
+conda activate ./env
+
+# Instalar requirements
+pip install -r requirements.txt
