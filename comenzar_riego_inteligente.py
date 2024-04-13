@@ -33,7 +33,7 @@ CAMPO_RIEGO = 0
 HUMEDAD = 0
 HUMEDAD_RIEGO= 0.48
 
-def determinar_riego(t):
+def iniciar_riego(t):
      '''
      If you use a pin more often, it can be worth it to use the get_pin method of the board.
      It let's you specify what pin you need by a string, composed of 'a' or 'd' (analog or digital pin),
@@ -96,7 +96,7 @@ def determinar_riego(t):
                
 
 # Begin Scheduling Logic
-schedule.every().day.at("7:00").do(determinar_riego, tiempo)
+schedule.every().day.at("7:00").do(iniciar_riego, tiempo)
 
 # Run Program continuously
 while CONTINUAR:
