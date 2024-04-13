@@ -1,9 +1,9 @@
 #1 Probar sensores humedad - probab_sensores_de_humedad.py
 
 3 Medidas:
-    1. Al Aire Libre
-    2. En Tierra Recien Mojada (T=0 horas)
-    3. En Tierra Seca <--- Hay que regar de Nuevo
+    1. Al Aire Libre---- 0.5582
+    2. En Tierra Recien Mojada (T=0 horas) ----- 0.3324
+    3. En Tierra Seca <--- Hay que regar de Nuevo----- 0.5582
     4. En Tierra Semi-Mojada (T=6 horas)
     5. En Tierra Casi-Seca (T=3 dias)
 
