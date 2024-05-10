@@ -8,6 +8,16 @@ import schedule
 from datetime import datetime
 from datetime import date
 from grabar_a_base_de_datos import actualizar_base_de_datos
+import argparse
+
+# Initialize parser
+parser = argparse.ArgumentParser()
+parser.add_argument("-t", "--time", help = "Tiempo de ejecutar")
+
+
+
+args = parser.parse_args()
+Horario_riego= args.time
 
 
 data_path = "data/DatosMeteorologicos_Diarios.csv"
@@ -96,7 +106,7 @@ def iniciar_riego(t):
                
 
 # Begin Scheduling Logic
-schedule.every().day.at("18:42").do(iniciar_riego, tiempo)
+schedule.every().day.at(f"{Horario_riego}").do(iniciar_riego, tiempo)
 
 # Run Program continuously
 while CONTINUAR:

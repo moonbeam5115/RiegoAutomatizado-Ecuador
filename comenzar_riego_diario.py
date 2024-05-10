@@ -8,6 +8,19 @@ import schedule
 from datetime import datetime
 from datetime import date
 from grabar_a_base_de_datos import actualizar_base_de_datos
+import argparse
+
+# Initialize parser
+parser = argparse.ArgumentParser()
+parser.add_argument("-t", "--time", help = "Tiempo de ejecutar")
+
+
+
+args = parser.parse_args()
+Horario_riego= args.time
+
+    
+
 
 CONTINUAR = True
 
@@ -38,7 +51,7 @@ def iniciar_riego(t):
      e.g. a:0:i for analog 0 as input, or
           d:3:p for digital pin 3 as pwm.
      ''' 
-     board = pyfirmata.Arduino('COM4')
+     board = pyfirmata.Arduino('COM3')
 
      #iterator thread
      it = util.Iterator(board)
@@ -67,7 +80,7 @@ def iniciar_riego(t):
 
 
 # Begin Scheduling Logic
-schedule.every().day.at("23:39").do(iniciar_riego, tiempo)
+schedule.every().day.at(f"{Horario_riego}").do(iniciar_riego, tiempo)
 
 # Run Program continuously
 while CONTINUAR:
