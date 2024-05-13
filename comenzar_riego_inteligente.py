@@ -103,6 +103,7 @@ def iniciar_riego(v_o_60_pct, v_o_80_pct):
                # Ejecutar el program por el tiempo determinado, t
                while cambio_en_tiempo <= t:
                     print("cambio ", cambio_en_tiempo,"tiempo",  t)
+                    print("Humedad (%): ", porcentaje_humedad_arduino)
                     end = time.time()
                     cambio_en_tiempo = round(end-ahora)
                     digital_5_output.write(0)
@@ -120,6 +121,7 @@ def iniciar_riego(v_o_60_pct, v_o_80_pct):
                # Ejecutar el program por el tiempo determinado, t
                while cambio_en_tiempo <= t:
                     print("cambio ", cambio_en_tiempo,"tiempo",  t)
+                    print("Humedad (%): ", porcentaje_humedad_arduino)
                     end = time.time()
                     cambio_en_tiempo = round(end-ahora)
                     digital_5_output.write(0)
@@ -128,8 +130,8 @@ def iniciar_riego(v_o_60_pct, v_o_80_pct):
                digital_5_output.write(1)
                break
           else:
-               print(porcentaje_humedad_arduino)
                print("No necesita agua... Finalizando Sesion de Riego.")
+               print("Humedad (%): ", porcentaje_humedad_arduino)
                digital_5_output.write(1)
                time.sleep(1)
 
