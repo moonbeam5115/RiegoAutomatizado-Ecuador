@@ -10,4 +10,4 @@ def _map(x, in_min, in_max, out_min, out_max):
 
     returns a value between - 0-1
     '''
-    return ((x - in_min)*(out_max, out_min) / (in_max - in_min) + out_min)/100
+    return ((x - in_min)*(out_max - out_min) / (in_max - in_min) + out_min)/100
