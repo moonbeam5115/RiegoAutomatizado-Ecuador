@@ -83,10 +83,7 @@ def iniciar_riego(v_o_60_pct, v_o_80_pct):
           if humedad_sensor_tierra > 0.5582:
                humedad_sensor_tierra = 0.5582
 
-          volumen_optimizado_60_pct = 0.9*volumen_de_riego
-          volumen_optimizado_80_pct = 0.6*volumen_de_riego
           porcentaje_humedad_arduino = _map(humedad_sensor_tierra, 0.3167, 0.5582, 100, 0)
-               
 
           if porcentaje_humedad_arduino < HUMEDAD_PARA_REGAR_SUELO:
                print(f"Humedad baja detectada... Comenzando Sesion de Riego por {t} segundos")
