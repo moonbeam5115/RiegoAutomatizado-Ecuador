@@ -15,11 +15,8 @@ from humedad_mapa_sensor import _map
 parser = argparse.ArgumentParser()
 parser.add_argument("-t", "--time", help = "Tiempo de ejecutar")
 
-
-
 args = parser.parse_args()
-Horario_riego= args.time
-
+Horario_riego = args.time
 
 data_path = "data/DatosMeteorologicos_Diarios.csv"
 tmax, tmin, hr, hr_min, hr_max = promedios_datos_met(path_de_datos=data_path)

@@ -14,13 +14,8 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("-t", "--time", help = "Tiempo de ejecutar")
 
-
-
 args = parser.parse_args()
 Horario_riego= args.time
-
-    
-
 
 CONTINUAR = True
 
