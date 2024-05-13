@@ -95,6 +95,6 @@ current_time = time_now.strftime("%H:%M:%S")
 CAMPO_RIEGO = 1
 SISTEMA_UTILIZADO = "Manual"
 
-new_data = [fecha_string, current_time, CAMPO_RIEGO, volumen_de_riego, "N/A", SISTEMA_UTILIZADO]
+new_data = [fecha_string, current_time, CAMPO_RIEGO, volumen_de_riego, "N/A", "N/A", SISTEMA_UTILIZADO]
 filename = 'database/' + 'datos_riego_manual.csv'
 actualizar_base_de_datos(filename, new_data)

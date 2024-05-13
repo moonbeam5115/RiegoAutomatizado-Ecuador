@@ -2,7 +2,7 @@ import csv
 import os
 import time
 
-campos = ["Fecha (DD-MM-YYYY)", "Hora (24)", "Riego", "Volumen (L)", "Humedad (0-1)", "Sistema Utilizado"]
+campos = ["Fecha (DD-MM-YYYY)", "Hora (24)", "Riego", "Volumen (L)", "Humedad Sensor (0-1)", "Humedad %", "Sistema Utilizado"]
 
 filepath = 'database/'
 filename = filepath + 'datos_riego_inteligente.csv'
