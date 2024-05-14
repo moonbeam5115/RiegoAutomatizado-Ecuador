@@ -87,7 +87,9 @@ def iniciar_riego():
           if porcentaje_humedad_arduino < HUMEDAD_PARA_REGAR_SUELO:
                tiempo = calcular_tiempo(volumen=volumen_optimizado_60_pct,
                          Caudal=Caudal)
-               print(f"Humedad baja detectada... Comenzando Sesion de Riego por {tiempo} segundos")
+               print("Humedad baja detectada... Tiempo de riego por Arduino (segundos): ", tiempo)
+               print("Humedad baja detectada... Tiempo de riego por Arduino (minutos): ", tiempo/60)
+              
 
                CAMPO_RIEGO = 1
                HUMEDAD = humedad_sensor_tierra
@@ -107,6 +109,8 @@ def iniciar_riego():
           elif porcentaje_humedad_arduino >= HUMEDAD_PARA_REGAR_SUELO and porcentaje_humedad_arduino < 0.8:
                tiempo = calcular_tiempo(volumen=volumen_optimizado_80_pct,
                     Caudal=Caudal)
+               print("Humedad baja detectada... Tiempo de riego por Arduino (segundos): ", tiempo)
+               print("Humedad baja detectada... Tiempo de riego por Arduino (minutos): ", tiempo/60)
                CAMPO_RIEGO = 1
                HUMEDAD = humedad_sensor_tierra
                PORC_HUMEDAD = porcentaje_humedad_arduino
