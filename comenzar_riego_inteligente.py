@@ -32,8 +32,7 @@ volumen_optimizado_80_pct = 0.6*volumen_de_riego
 Caudal = 0.03703    # en L/s  -  Determinado a base de experimentos
 Caudal_mL = 37.03    # en mililitro por segundo - Determinado a base de experimentos
 
-print("Tiempo de riego por Arduino (segundos): ", tiempo)
-print("Tiempo de riego por Arduino (minutos): ", tiempo/60)
+
 
 CONTINUAR = True
 CAMPO_RIEGO = 0
@@ -42,7 +41,7 @@ HUMEDAD_PARA_REGAR_SUELO = 0.6
 PORC_HUMEDAD = 0
 volumen_optimizado = 0
 
-def iniciar_riego(v_o_60_pct, v_o_80_pct):
+def iniciar_riego():
      '''
      If you use a pin more often, it can be worth it to use the get_pin method of the board.
      It let's you specify what pin you need by a string, composed of 'a' or 'd' (analog or digital pin),
@@ -86,17 +85,17 @@ def iniciar_riego(v_o_60_pct, v_o_80_pct):
           porcentaje_humedad_arduino = _map(humedad_sensor_tierra, 0.3167, 0.5582, 100, 0)
 
           if porcentaje_humedad_arduino < HUMEDAD_PARA_REGAR_SUELO:
-               print(f"Humedad baja detectada... Comenzando Sesion de Riego por {t} segundos")
                tiempo = calcular_tiempo(volumen=volumen_optimizado_60_pct,
                          Caudal=Caudal)
+               print(f"Humedad baja detectada... Comenzando Sesion de Riego por {tiempo} segundos")
 
                CAMPO_RIEGO = 1
                HUMEDAD = humedad_sensor_tierra
                PORC_HUMEDAD = porcentaje_humedad_arduino
                volumen_optimizado = volumen_optimizado_60_pct
                # Ejecutar el program por el tiempo determinado, t
-               while cambio_en_tiempo <= t:
-                    print("cambio ", cambio_en_tiempo,"tiempo",  t)
+               while cambio_en_tiempo <= tiempo:
+                    print("cambio ", cambio_en_tiempo,"tiempo", tiempo)
                     print("Humedad (%): ", porcentaje_humedad_arduino)
                     end = time.time()
                     cambio_en_tiempo = round(end-ahora)
@@ -113,8 +112,8 @@ def iniciar_riego(v_o_60_pct, v_o_80_pct):
                PORC_HUMEDAD = porcentaje_humedad_arduino
                volumen_optimizado = volumen_optimizado_80_pct
                # Ejecutar el program por el tiempo determinado, t
-               while cambio_en_tiempo <= t:
-                    print("cambio ", cambio_en_tiempo,"tiempo",  t)
+               while cambio_en_tiempo <= tiempo:
+                    print("cambio ", cambio_en_tiempo,"tiempo",  tiempo)
                     print("Humedad (%): ", porcentaje_humedad_arduino)
                     end = time.time()
                     cambio_en_tiempo = round(end-ahora)
@@ -138,7 +137,7 @@ def iniciar_riego(v_o_60_pct, v_o_80_pct):
                
 
 # Begin Scheduling Logic
-schedule.every().day.at(f"{Horario_riego}").do(iniciar_riego, tiempo)
+schedule.every().day.at(f"{Horario_riego}").do(iniciar_riego)
 
 # Run Program continuously
 while CONTINUAR:
