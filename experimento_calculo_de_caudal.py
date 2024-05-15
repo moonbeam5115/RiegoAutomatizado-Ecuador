@@ -26,25 +26,25 @@ digital_5_output.write(1)
 
 print("Comenzando Experimento Para Determinar Caudal...")
 i = 0
-while True:
-    humedad_sensor_tierra = analog_0_input.read()
+# while True:
+#     humedad_sensor_tierra = analog_0_input.read()
     
     
-    a = win32api.GetKeyState(0x02)
-    if a != state_right:  # Button state changed
-        state_right = a
+#     a = win32api.GetKeyState(0x02)
+#     if a != state_right:  # Button state changed
+#         state_right = a
         
-        if a < 0:
-            if i == 0:
-                i += 1
-                comienzo = time.time()
-                print('Right Button Pressed')
-            digital_5_output.write(0)   
-        else:
-            print('Right Button Released')
-            final = time.time()
-            digital_5_output.write(1)
-            cambio_en_tiempo = final - comienzo
-            caudal = volumen_experimental/cambio_en_tiempo
-            print(f"El Caudal es: {caudal} L/s")
-            exit(0)
+#         if a < 0:
+#             if i == 0:
+#                 i += 1
+#                 comienzo = time.time()
+#                 print('Right Button Pressed')
+#             digital_5_output.write(0)   
+#         else:
+#             print('Right Button Released')
+#             final = time.time()
+#             digital_5_output.write(1)
+#             cambio_en_tiempo = final - comienzo
+#             caudal = volumen_experimental/cambio_en_tiempo
+#             print(f"El Caudal es: {caudal} L/s")
+#             exit(0)

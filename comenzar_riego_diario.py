@@ -9,7 +9,15 @@ from datetime import datetime
 from datetime import date
 from grabar_a_base_de_datos import actualizar_base_de_datos
 import argparse
+board = pyfirmata.Arduino('COM3')
 
+#iterator thread
+it = util.Iterator(board)
+it.start()
+
+digital_6_output = board.get_pin('d:6:o')
+# 1 is off, 0 is on (Arduino is messed up)
+digital_6_output.write(1)
 # Initialize parser
 parser = argparse.ArgumentParser()
 parser.add_argument("-t", "--time", help = "Tiempo de ejecutar")
@@ -46,13 +54,6 @@ def iniciar_riego(t):
      e.g. a:0:i for analog 0 as input, or
           d:3:p for digital pin 3 as pwm.
      ''' 
-     board = pyfirmata.Arduino('COM3')
-
-     #iterator thread
-     it = util.Iterator(board)
-     it.start()
-
-     digital_6_output = board.get_pin('d:6:o')
      # 1 is off, 0 is on (Arduino is messed up)
      digital_6_output.write(1)
      cambio_en_tiempo = 0

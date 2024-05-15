@@ -1,3 +1,10 @@
+#include <Boards.h>
+#include <Firmata.h>
+#include <FirmataConstants.h>
+#include <FirmataDefines.h>
+#include <FirmataMarshaller.h>
+#include <FirmataParser.h>
+
 int OUT1 = 2;
 int Pin1 = A0; 
 float value1 = 0;
@@ -21,6 +28,8 @@ void loop() {
   Serial.print("MOISTURE LEVEL:");
   value1 = analogRead(Pin1);
   Serial.println(value1);
+
+  Serial.print(analogRead(OUT1));
 //  if(value1>550)
 //  {
 //    digitalWrite(OUT1, relayOffState);
