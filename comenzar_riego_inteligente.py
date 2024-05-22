@@ -21,18 +21,20 @@ Horario_riego = args.time
 data_path = "data/DatosMeteorologicos_Diarios.csv"
 tmax, tmin, hr, hr_min, hr_max = promedios_datos_met(path_de_datos=data_path)
 
-volumen_de_riego = calcular(tmax=tmax,
+volumen_de_riego_total = calcular(tmax=tmax,
                             tmin=tmin,
                             hr_min=hr_min,
                             hr_max=hr_max) # Returns Volume in L (Liters)
 
-volumen_optimizado_60_pct = 0.9*volumen_de_riego
-volumen_optimizado_80_pct = 0.6*volumen_de_riego
+volumen_por_manguera = volumen_de_riego_total/4
+
+volumen_optimizado_60_pct = 0.9*volumen_por_manguera
+volumen_optimizado_80_pct = 0.6*volumen_por_manguera
 
 Caudal = 0.03703    # en L/s  -  Determinado a base de experimentos
 Caudal_mL = 37.03    # en mililitro por segundo - Determinado a base de experimentos
 
-
+# Variables
 
 CONTINUAR = True
 CAMPO_RIEGO = 0
@@ -62,8 +64,16 @@ def iniciar_riego():
      analog_1 = board.get_pin('a:2:i')
      analog_1.enable_reporting()
 
+     # Inicializar 4 outputs
+     digital_4_output = board.get_pin('d:4:o')
+     digital_4_output.write(1)
      digital_5_output = board.get_pin('d:5:o')
      digital_5_output.write(1)
+     digital_6_output = board.get_pin('d:6:o')
+     digital_6_output.write(1)
+     digital_7_output = board.get_pin('d:7:o')
+     digital_7_output.write(1)
+     
      cambio_en_tiempo = 0
      ahora = time.time()
 
@@ -90,7 +100,6 @@ def iniciar_riego():
                print("Humedad baja detectada... Tiempo de riego por Arduino (segundos): ", tiempo)
                print("Humedad baja detectada... Tiempo de riego por Arduino (minutos): ", tiempo/60)
               
-
                CAMPO_RIEGO = 1
                HUMEDAD = humedad_sensor_tierra
                PORC_HUMEDAD = porcentaje_humedad_arduino
@@ -101,10 +110,16 @@ def iniciar_riego():
                     print("Humedad (%): ", porcentaje_humedad_arduino)
                     end = time.time()
                     cambio_en_tiempo = round(end-ahora)
+                    digital_4_output.write(0)
                     digital_5_output.write(0)
+                    digital_6_output.write(0)
+                    digital_7_output.write(0)
                
                CONTINUAR = False
+               digital_4_output.write(1)
                digital_5_output.write(1)
+               digital_6_output.write(1)
+               digital_7_output.write(1)
                break
           elif porcentaje_humedad_arduino >= HUMEDAD_PARA_REGAR_SUELO and porcentaje_humedad_arduino < 0.8:
                tiempo = calcular_tiempo(volumen=volumen_optimizado_80_pct,
@@ -121,15 +136,25 @@ def iniciar_riego():
                     print("Humedad (%): ", porcentaje_humedad_arduino)
                     end = time.time()
                     cambio_en_tiempo = round(end-ahora)
+                    digital_4_output.write(0)
                     digital_5_output.write(0)
+                    digital_6_output.write(0)
+                    digital_7_output.write(0)
                
                CONTINUAR = False
+               digital_4_output.write(1)
                digital_5_output.write(1)
+               digital_6_output.write(1)
+               digital_7_output.write(1)
                break
           else:
                print("No necesita agua... Finalizando Sesion de Riego.")
                print("Humedad (%): ", porcentaje_humedad_arduino)
+               digital_4_output.write(1)
                digital_5_output.write(1)
+               digital_6_output.write(1)
+               digital_7_output.write(1)
+
                time.sleep(1)
 
                HUMEDAD = humedad_sensor_tierra
@@ -155,6 +180,6 @@ time_now = datetime.now()
 current_time = time_now.strftime("%H:%M:%S")
 SISTEMA_UTILIZADO = "Inteligente"
 
-new_data = [fecha_string, current_time, CAMPO_RIEGO, volumen_optimizado, HUMEDAD, PORC_HUMEDAD, SISTEMA_UTILIZADO]
+new_data = [fecha_string, current_time, CAMPO_RIEGO, volumen_de_riego_total, HUMEDAD, PORC_HUMEDAD, SISTEMA_UTILIZADO]
 filename = 'database/' + 'datos_riego_inteligente.csv'
 actualizar_base_de_datos(filename, new_data)

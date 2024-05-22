@@ -15,9 +15,17 @@ board = pyfirmata.Arduino('COM3')
 it = util.Iterator(board)
 it.start()
 
-digital_6_output = board.get_pin('d:6:o')
+# Inicializar 4 outputs
 # 1 is off, 0 is on (Arduino is messed up)
+digital_4_output = board.get_pin('d:4:o')
+digital_4_output.write(1)
+digital_5_output = board.get_pin('d:5:o')
+digital_5_output.write(1)
+digital_6_output = board.get_pin('d:6:o')
 digital_6_output.write(1)
+digital_7_output = board.get_pin('d:7:o')
+digital_7_output.write(1)
+
 # Initialize parser
 parser = argparse.ArgumentParser()
 parser.add_argument("-t", "--time", help = "Tiempo de ejecutar")
@@ -35,10 +43,11 @@ volumen_de_riego = calcular(tmax=tmax,
                             hr_min=hr_min,
                             hr_max=hr_max) # Returns Volume in L (Liters)
 
+volumen_por_manguera = volumen_de_riego/4
 Caudal = 0.03703    # en L/s  -  Determinado a base de experimentos
 Caudal_mL = 37.03    # en mililitro por segundo - Determinado a base de experimentos
 
-tiempo = calcular_tiempo(volumen=volumen_de_riego,
+tiempo = calcular_tiempo(volumen=volumen_por_manguera,
                          Caudal=Caudal)
 
 print("Tiempo de riego por Arduino (segundos): ", tiempo)
@@ -55,7 +64,10 @@ def iniciar_riego(t):
           d:3:p for digital pin 3 as pwm.
      ''' 
      # 1 is off, 0 is on (Arduino is messed up)
+     digital_4_output.write(1)
+     digital_5_output.write(1)
      digital_6_output.write(1)
+     digital_7_output.write(1)
      cambio_en_tiempo = 0
      ahora = time.time()
 
@@ -68,10 +80,16 @@ def iniciar_riego(t):
 
             end = time.time()
             cambio_en_tiempo = round(end-ahora)
+            digital_4_output.write(0)
+            digital_5_output.write(0)
             digital_6_output.write(0)
+            digital_7_output.write(0)
         
         CONTINUAR = False
+        digital_4_output.write(1)
+        digital_5_output.write(1)
         digital_6_output.write(1)
+        digital_7_output.write(1)
         break
 
 
