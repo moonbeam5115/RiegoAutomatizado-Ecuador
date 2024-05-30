@@ -6,7 +6,7 @@ def calcular(tmax, tmin, hr_min, hr_max):
     T_total = (tmax+tmin)/2
     z = 2496.1 # altura a nivel del mar m
     Tri= 4098*(0.6108*math.exp((17.27*T_total)/(T_total+237.3)))/((T_total+237.3)**2)
-    P = 101.3*((293-(0.0065*z)/293)**5.26)
+    P = 101.3*(((293-(0.0065*z))/293))**5.26
     y = (0.665*10**-3)*P # Constante Psicrosometrica
     e0T = 0.6108*(math.exp((17.27*T_total)/(T_total+237.3))) # No es utilizando en la calculacion
     e0Tmax = 0.6108*(math.exp((17.27*tmax)/(tmax+237.3)))
@@ -40,9 +40,14 @@ def calcular(tmax, tmin, hr_min, hr_max):
     print("Rnl: ", Rnl) 
     print("alfa: ", alfa)  
     print("Rns: ", Rns)
-    print("Rn: ", Rn) 
+    print("Rn: ", Rn)
+    print("Rs: ", Rs)
     print("u2: ", u2) 
     print("Etd: ", Etd) 
+    print("P :", P)
+    print("y :", y)
+    print("es :", es)
+    print("ea :", ea)
 
 
 
@@ -59,19 +64,22 @@ def calcular(tmax, tmin, hr_min, hr_max):
     Pe = 0 # Aporte efectivo por lluvia
     Ge = 0 # Aporte por agua subterranea
     Ln = Etc # Lamina Neta de riego mm 
-    Ib =  1.50 # velocidad de infiltracion basica - cm/hora
-    Tr = (10*Ln)/Ib # (multiplicado por 10 para convertir mm a cm) - no se utiliza
-    Fr = Ln/Etc
-    Efr = 0.3 # Eficiencia de riego por inundacion
-    Lb = Fr*Ln/Efr
-    area =  1200000 # mm^2
-    volumen_de_riego = Lb*area 
-    Ef = (Etc*Fr/Lb) 
-    Ea = (Ln/Lb)*100
+    # Ib =  1.50 # velocidad de infiltracion basica - cm/hora
+    # Tr = (10*Ln)/Ib # (multiplicado por 10 para convertir mm a cm) - no se utiliza
+    # Fr = Ln/Etc
+    # Efr = 0.3 # Eficiencia de riego por inundacion
+    # Lb = Fr*Ln/Efr
+    # area =  1200000 # mm^2
+    # volumen_de_riego = Lb*area 
+    # Ef = (Etc*Fr/Lb) 
+    # Ea = (Ln/Lb)*100
+    k = 0.4
+    Sa = 0.2
+    Sh = 0.2
+    UC = Etc
+    Ef = 0.8075
+    volumen_de_riego = ((k*Sa*Sh*UC)/Ef)*24*4
     print("\n")
-    print("Frecuencia: ", Fr)
-    print("volumen de riego (mL) ", volumen_de_riego)
-    print("volumen de reigo (L) ", volumen_de_riego/1000000)
-    print("Volumen en L Por Dia: ", volumen_de_riego/1000000/Fr)
+    print("volumen de riego (L) ", volumen_de_riego)
 
-    return volumen_de_riego/1000000
+    return volumen_de_riego
