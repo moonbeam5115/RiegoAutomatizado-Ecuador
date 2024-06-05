@@ -14,7 +14,10 @@ it.start()
 analog_0_input = board.get_pin('a:0:i')
 analog_0_input.enable_reporting()
 
+digital_4_output = board.get_pin('d:4:o')
 digital_5_output = board.get_pin('d:5:o')
+digital_6_output = board.get_pin('d:6:o')
+digital_7_output = board.get_pin('d:7:o')
 
 comienzo = None
 final = None
@@ -22,7 +25,10 @@ cambio_en_tiempo = 0
 caudal = 0
 volumen_experimental = 1
 
+digital_4_output.write(1)
 digital_5_output.write(1)
+digital_6_output.write(1)
+digital_7_output.write(1)
 
 print("Comenzando Experimento Para Determinar Caudal...")
 i = 0
