@@ -1,7 +1,7 @@
 import pyfirmata
 import time
 from pyfirmata import util
-from calcular_datos_met import promedios_datos_met
+from calcular_datos_met import promedios_datos_met_v2
 from calcular_volumen_de_riego import calcular
 from calcular_tiempo_de_riego import calcular_tiempo
 import schedule
@@ -35,8 +35,8 @@ Horario_riego= args.time
 
 CONTINUAR = True
 
-data_path = "data/DatosMeteorologicos_Diarios.csv"
-tmax, tmin, hr, hr_min, hr_max = promedios_datos_met(path_de_datos=data_path)
+data_path = "data/DatosMet_v2.csv"
+tmax, tmin, hr_min, hr_max = promedios_datos_met_v2(path_de_datos=data_path)
 
 volumen_de_riego = calcular(tmax=tmax,
                             tmin=tmin,

@@ -68,7 +68,7 @@ def calcular(tmax, tmin, hr_min, hr_max):
     # volumen_de_riego = Lb*area 
     # Ef = (Etc*Fr/Lb) 
     # Ea = (Ln/Lb)*100
-    Ef_riego= 0,5 #Eficiencia de Riego
+    Ef_riego = 0.5 #Eficiencia de Riego
     volumen_de_riego= Ln/Ef_riego
     print("\n")
     print("volumen de riego (L) ", volumen_de_riego)
