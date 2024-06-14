@@ -6,7 +6,7 @@ def calcular(tmax, tmin, hr_min, hr_max):
     T_total = (tmax+tmin)/2
     z = 2496.1 # altura a nivel del mar m
     Tri= 4098*(0.6108*(math.exp((17.27*T_total)/(T_total+237.3))))/(T_total+237.3)
-    P = 101.3*(((293-(0.0065*z))/293)**5.26)
+    P = 101.3*((293-0.0065*z)/293)**5.26
     y = (0.665*10**-3)*P # Constante Psicrosometrica
     e0T = 0.6108*(math.exp((17.27*T_total)/(T_total+237.3))) # No es utilizando en la calculacion
     e0Tmax = 0.6108*(math.exp((17.27*tmax)/(tmax+237.3)))
@@ -16,14 +16,15 @@ def calcular(tmax, tmin, hr_min, hr_max):
     G = 0
     krs = 0.17 # Coeficiente de Ajuste
     Ra = 36.8  # Radiacion Extraterrestre MJ M^-2 Dia^-1 
-    Rs = (krs*(math.sqrt(tmax-tmin)))*Ra
+    Rs = krs*(math.sqrt(tmax-tmin))*Ra
     #Radiacion solar ajustada en funcion a invernadero-calculado con hargreaves/Consultar/Rsaj
     Rsaj = (0.613*Rs) - 2.9184 # No se utiliza
-    Rso = (0.75 * ((10**-5)*z))*Ra
+    Rso = 29.437 #(0.75 *2*((10**-5)*z))*Ra
     omega = 4.903*(10**-9) # Constante Stephen Boltzmann - MJ/M^2*Dia
     tmax_k = ((tmax + 273.16)**4)*omega
     tmin_k = ((tmin + 273.16)**4)*omega
-    Rnl = ((tmax_k + tmin_k)/2)*(0.34 - (0.14*math.sqrt(ea)))*((1.35*(Rs/Rso)) - 0.35)
+    ttotal_k=tmax_k/2+ tmin_k/2
+    Rnl = (ttotal_k) *(0.34 - 0.14*math.sqrt(ea))*(1.35*Rs/Rso -0.35)
     alfa = 0.23 # Albedo de la superficie - cultivo de referencia 
     Rns = (1-alfa)*Rs
     Rn = Rns- Rnl
@@ -43,7 +44,6 @@ def calcular(tmax, tmin, hr_min, hr_max):
     print("Rns: ", Rns)
     print("Rn: ", Rn)
     print("Etd: ", Etd) 
-
 
     #Ecuaciones
     Kc = 0.95
